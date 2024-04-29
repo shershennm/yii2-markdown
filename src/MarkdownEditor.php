@@ -375,10 +375,10 @@ EOT;
         $encodeLabel = ArrayHelper::remove($options, 'encodeLabel', $this->encodeLabels);
         $options['type'] = 'button';
         $prefix = $this->getDefaultIconPrefix();
-        if (strlen(trim($icon)) > 0) {
+        if (strlen(trim($icon ?? '')) > 0) {
             $icon = "<i class='{$prefix}{$icon}'></i>";
         }
-        if (strlen(trim($label)) > 0) {
+        if (strlen(trim($label ?? '')) > 0) {
             $icon .= ' ';
         }
         $label = $icon . ($encodeLabel ? Html::encode($label) : $label);
@@ -390,7 +390,7 @@ EOT;
         if (!empty($items)) {
             Html::addCssClass($options, 'dropdown-toggle');
             $options['data-toggle'] = 'dropdown';
-            if (!$this->isBs4()) {
+            if (!$this->isBs(4)) {
                 $label .= ' <span class="caret"></span>';
             }
         }
@@ -413,7 +413,7 @@ EOT;
                 $item['options']['id'] = $this->getButtonId($key);
 
                 $icon = empty($item['icon']) ? '' : '<i class="' . $prefix . $item['icon'] . '"></i> ';
-                if ($this->isBs4()) {
+                if ($this->isBs(4)) {
                     Html::addCssClass($item['options'], 'dropdown-item');
                 }
                 $output .= "<li>" . Html::a($icon . $item['label'], '#', $item['options']) . "</li>";
@@ -535,7 +535,7 @@ EOT;
                 ],
             ];
         };
-        $isBs4 = $this->isBs4();
+        $isBs4 = $this->isBs(4);
 
         $this->toolbar = [
             [
@@ -627,7 +627,7 @@ EOT;
         if (!empty($this->footerButtons)) {
             return;
         }
-        $isBs4 = $this->isBs4();
+        $isBs4 = $this->isBs(4);
         $this->footerButtons = [
             [
                 'buttons' => [
